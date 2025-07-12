@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using ProyectoPruebaTecnica.Models;
+using System.Configuration;
+using System.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<TrabajadoresPruebaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
 var app = builder.Build();
 

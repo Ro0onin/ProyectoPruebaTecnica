@@ -19,9 +19,9 @@ public partial class TrabajadoresPruebaContext : DbContext
 
     public virtual DbSet<Distrito> Distritos { get; set; }
 
-    public virtual DbSet<Provincium> Provincia { get; set; }
+    public virtual DbSet<Provincia> Provincia { get; set; }
 
-    public virtual DbSet<Trabajadore> Trabajadores { get; set; }
+    public virtual DbSet<Trabajadores> Trabajadores { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
     }
@@ -56,7 +56,7 @@ public partial class TrabajadoresPruebaContext : DbContext
                 .HasConstraintName("FK__Distrito__IdProv__3D5E1FD2");
         });
 
-        modelBuilder.Entity<Provincium>(entity =>
+        modelBuilder.Entity<Provincia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Provinci__3214EC07F5CBB75E");
 
@@ -69,7 +69,7 @@ public partial class TrabajadoresPruebaContext : DbContext
                 .HasConstraintName("FK__Provincia__IdDep__3E52440B");
         });
 
-        modelBuilder.Entity<Trabajadore>(entity =>
+        modelBuilder.Entity<Trabajadores>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Trabajad__3214EC07DB077267");
 

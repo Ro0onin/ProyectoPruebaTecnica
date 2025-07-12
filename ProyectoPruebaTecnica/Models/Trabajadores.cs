@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProyectoPruebaTecnica.Models;
 
-public partial class Trabajadore
+public partial class Trabajadores
 {
     public int Id { get; set; }
 
@@ -21,9 +22,12 @@ public partial class Trabajadore
 
     public int? IdDistrito { get; set; }
 
+    [Display(Name = "Departamento")]
     public virtual Departamento? IdDepartamentoNavigation { get; set; }
 
+    [Display(Name = "Distrito")]
     public virtual Distrito? IdDistritoNavigation { get; set; }
 
-    public virtual Provincium? IdProvinciaNavigation { get; set; }
+    [Display(Name = "Provincia")]
+    public virtual Provincia? IdProvinciaNavigation { get; set; }
 }

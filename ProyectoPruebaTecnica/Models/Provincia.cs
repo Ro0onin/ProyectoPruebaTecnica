@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoPruebaTecnica.Models;
 
-public partial class Provincium
+public partial class Provincia
 {
     public int Id { get; set; }
 
@@ -15,5 +15,5 @@ public partial class Provincium
 
     public virtual Departamento? IdDepartamentoNavigation { get; set; }
 
-    public virtual ICollection<Trabajadore> Trabajadores { get; set; } = new List<Trabajadore>();
+    public virtual ICollection<Trabajadores> Trabajadores { get; set; } = new List<Trabajadores>();
 }

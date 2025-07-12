@@ -11,7 +11,7 @@ public partial class Distrito
 
     public string? NombreDistrito { get; set; }
 
-    public virtual Provincium? IdProvinciaNavigation { get; set; }
+    public virtual Provincia? IdProvinciaNavigation { get; set; }
 
-    public virtual ICollection<Trabajadore> Trabajadores { get; set; } = new List<Trabajadore>();
+    public virtual ICollection<Trabajadores> Trabajadores { get; set; } = new List<Trabajadores>();
 }

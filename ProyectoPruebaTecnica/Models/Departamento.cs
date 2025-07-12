@@ -9,7 +9,7 @@ public partial class Departamento
 
     public string? NombreDepartamento { get; set; }
 
-    public virtual ICollection<Provincium> Provincia { get; set; } = new List<Provincium>();
+    public virtual ICollection<Provincia> Provincia { get; set; } = new List<Provincia>();
 
-    public virtual ICollection<Trabajadore> Trabajadores { get; set; } = new List<Trabajadore>();
+    public virtual ICollection<Trabajadores> Trabajadores { get; set; } = new List<Trabajadores>();
 }
