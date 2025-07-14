@@ -22,6 +22,25 @@ namespace ProyectoPruebaTecnica.Controllers
         public async Task<IActionResult> Index()
         {
             var trabajadoresPruebaContext = _context.Trabajadores.Include(t => t.IdDepartamentoNavigation).Include(t => t.IdDistritoNavigation).Include(t => t.IdProvinciaNavigation);
+
+            ViewBag.IdDepartamento = new SelectList(
+    _context.Departamentos.OrderBy(d => d.NombreDepartamento).ToList(),
+    "Id", "NombreDepartamento");
+
+            ViewBag.IdProvincia = new SelectList(
+                _context.Provincia.OrderBy(p => p.NombreProvincia).ToList(),
+                "Id", "NombreProvincia");
+
+            ViewBag.IdDistrito = new SelectList(
+                _context.Distritos.OrderBy(d => d.NombreDistrito).ToList(),
+                "Id", "NombreDistrito");
+
+            ViewBag.Sexos = new SelectList(new List<SelectListItem>{
+                new SelectListItem { Text = "Masculino", Value = "M" },
+                new SelectListItem { Text = "Femenino", Value = "F" }
+            }, "Value", "Text");
+
+            ViewBag.TipoDocumento = new SelectList(new[] { "DNI" });
             return View(await trabajadoresPruebaContext.ToListAsync());
         }
 
@@ -63,9 +82,25 @@ namespace ProyectoPruebaTecnica.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Id", trabajadores.IdDepartamento);
-            ViewData["IdDistrito"] = new SelectList(_context.Distritos, "Id", "Id", trabajadores.IdDistrito);
-            ViewData["IdProvincia"] = new SelectList(_context.Provincia, "Id", "Id", trabajadores.IdProvincia);
+            ViewBag.IdDepartamento = new SelectList(
+                _context.Departamentos.OrderBy(d => d.NombreDepartamento).ToList(),
+                "Id", "NombreDepartamento", trabajadores.IdDepartamento);
+
+            ViewBag.IdProvincia = new SelectList(
+                _context.Provincia.OrderBy(p => p.NombreProvincia).ToList(),
+                "Id", "NombreProvincia", trabajadores.IdProvincia);
+
+            ViewBag.IdDistrito = new SelectList(
+                _context.Distritos.OrderBy(d => d.NombreDistrito).ToList(),
+                "Id", "NombreDistrito", trabajadores.IdDistrito);
+
+            ViewBag.Sexos = new SelectList(new List<SelectListItem> {
+        new SelectListItem { Text = "Masculino", Value = "M" },
+        new SelectListItem { Text = "Femenino", Value = "F" }
+    }, "Value", "Text", trabajadores.Sexo);
+
+            ViewBag.TipoDocumento = new SelectList(new[] { "DNI" }, trabajadores.TipoDocumento);
+
             return View(trabajadores);
         }
 
@@ -136,9 +171,22 @@ namespace ProyectoPruebaTecnica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Id", trabajadores.IdDepartamento);
-            ViewData["IdDistrito"] = new SelectList(_context.Distritos, "Id", "Id", trabajadores.IdDistrito);
-            ViewData["IdProvincia"] = new SelectList(_context.Provincia, "Id", "Id", trabajadores.IdProvincia);
+            ViewBag.IdDepartamento = new SelectList(
+                            _context.Departamentos.OrderBy(d => d.NombreDepartamento).ToList(),
+                            "Id", "NombreDepartamento");
+
+            ViewBag.IdProvincia = new SelectList(
+                _context.Provincia.OrderBy(p => p.NombreProvincia).ToList(),
+                "Id", "NombreProvincia");
+
+            ViewBag.IdDistrito = new SelectList(
+                _context.Distritos.OrderBy(d => d.NombreDistrito).ToList(),
+                "Id", "NombreDistrito");
+
+            ViewBag.Sexos = new SelectList(new List<SelectListItem>{
+                new SelectListItem { Text = "Masculino", Value = "M" },
+                new SelectListItem { Text = "Femenino", Value = "F" }
+            }, "Value", "Text");
             return View(trabajadores);
         }
 

@@ -1,29 +1,25 @@
 ﻿@model IEnumerable<ProyectoPruebaTecnica.Models.Trabajadores>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de Trabajadores";
+    var nuevoTrabajador = new ProyectoPruebaTecnica.Models.Trabajadores();
 }
 
-<h1>Listado de Trabajadores</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Nuevo Registro</a>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+        Nuevo Registro
+    </button>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoDocumento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroDocumento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sexo)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.First().TipoDocumento)</th>
+            <th>@Html.DisplayNameFor(model => model.First().NumeroDocumento)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Nombres)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Sexo)</th>
             <th>Departamento</th>
             <th>Provincia</th>
             <th>Distrito</th>
@@ -31,17 +27,12 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoDocumento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroDocumento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombres)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.TipoDocumento)</td>
+                <td>@Html.DisplayFor(m => item.NumeroDocumento)</td>
+                <td>@Html.DisplayFor(m => item.Nombres)</td>
                 <td>
                     @if (item.Sexo == "M")
                     {
@@ -52,24 +43,81 @@
                         <span class="badge bg-warning text-dark">Femenino</span>
                     }
                 </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDepartamentoNavigation.NombreDepartamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdProvinciaNavigation.NombreProvincia)
-            </td>
-            <td>
-                 @Html.DisplayFor(modelItem => item.IdDistritoNavigation.NombreDistrito)
-             </td>
-            <td>
-                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Editar</a> |
+                <td>@Html.DisplayFor(m => item.IdDepartamentoNavigation.NombreDepartamento)</td>
+                <td>@Html.DisplayFor(m => item.IdProvinciaNavigation.NombreProvincia)</td>
+                <td>@Html.DisplayFor(m => item.IdDistritoNavigation.NombreDistrito)</td>
+                <td>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-@item.Id">
+                        Editar
+                    </button>
                     <form asp-action="Delete" asp-route-id="@item.Id" method="post"
                           onsubmit="return confirm('¿Estás seguro de eliminar este registro?');"
-                          style="display: inline;">
+                          style="display:inline;">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Nuevo Trabajador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mb-3">
+                        <label for="TipoDocumento" class="form-label">Tipo de Documento</label>
+                        @Html.DropDownList("TipoDocumento", (SelectList)ViewBag.TipoDocumento, new { @class = "form-select" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="NumeroDocumento" class="form-label">Número de Documento</label>
+                        <input type="text" name="NumeroDocumento" class="form-control" />
+                        @Html.ValidationMessage("NumeroDocumento", null, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Nombres" class="form-label">Nombres</label>
+                        <input type="text" name="Nombres" class="form-control" />
+                        @Html.ValidationMessage("Nombres", null, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Sexo" class="form-label">Sexo</label>
+                        @Html.DropDownList("Sexo", (SelectList)ViewBag.Sexos, new { @class = "form-select" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="IdDepartamento" class="form-label">Departamento</label>
+                        @Html.DropDownList("IdDepartamento", (SelectList)ViewBag.IdDepartamento, new { @class = "form-select" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="IdProvincia" class="form-label">Provincia</label>
+                        @Html.DropDownList("IdProvincia", (SelectList)ViewBag.IdProvincia, new { @class = "form-select" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="IdDistrito" class="form-label">Distrito</label>
+                        @Html.DropDownList("IdDistrito", (SelectList)ViewBag.IdDistrito, new { @class = "form-select" })
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
