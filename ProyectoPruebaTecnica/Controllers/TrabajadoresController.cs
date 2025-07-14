@@ -23,6 +23,7 @@ namespace ProyectoPruebaTecnica.Controllers
         {
             var trabajadoresPruebaContext = _context.Trabajadores.Include(t => t.IdDepartamentoNavigation).Include(t => t.IdDistritoNavigation).Include(t => t.IdProvinciaNavigation);
 
+           
             ViewBag.IdDepartamento = new SelectList(
     _context.Departamentos.OrderBy(d => d.NombreDepartamento).ToList(),
     "Id", "NombreDepartamento");

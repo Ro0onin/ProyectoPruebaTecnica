@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Listado de Trabajadores";
-    var nuevoTrabajador = new ProyectoPruebaTecnica.Models.Trabajadores();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -50,6 +49,83 @@
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-@item.Id">
                         Editar
                     </button>
+                    <div class="modal fade" id="editModal-@item.Id" tabindex="-1" aria-labelledby="editModalLabel-@item.Id" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form asp-action="Edit" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel-@item.Id">Editar Trabajador</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="Id" value="@item.Id" />
+
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo de Documento</label>
+                                    <select name="TipoDocumento" class="form-control">
+                                        <option value="DNI" selected>DNI</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Número de Documento</label>
+                                    <input type="text" name="NumeroDocumento" class="form-control" value="@item.NumeroDocumento" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nombres</label>
+                                    <input type="text" name="Nombres" class="form-control" value="@item.Nombres" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Sexo</label>
+                                    <select name="Sexo" class="form-control">
+                                                <option value="M" selected="@(item.Sexo == "M" ? "selected" : null)">Masculino</option>
+                                                <option value="F" selected="@(item.Sexo == "F" ? "selected" : null)">Femenino</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Departamento</label>
+                                    <select name="IdDepartamento" class="form-control">
+                                        @foreach (var d in (SelectList)ViewBag.IdDepartamento)
+                                        {
+                                                    <option value="@d.Value" selected="@(item.IdDepartamento?.ToString() == d.Value ? "selected" : null)">@d.Text</option>
+    
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Provincia</label>
+                                    <select name="IdProvincia" class="form-control">
+                                        @foreach (var p in (SelectList)ViewBag.IdProvincia)
+                                        {
+                                                    <option value="@p.Value" selected="@(item.IdProvincia?.ToString() == p.Value ? "selected" : null)">@p.Text</option>
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Distrito</label>
+                                    <select name="IdDistrito" class="form-control">
+                                        @foreach (var dis in (SelectList)ViewBag.IdDistrito)
+                                        {
+                                                    <option value="@dis.Value" selected="@(item.IdDistrito?.ToString() == dis.Value ? "selected" : null)">@dis.Text</option>
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
                     <form asp-action="Delete" asp-route-id="@item.Id" method="post"
                           onsubmit="return confirm('¿Estás seguro de eliminar este registro?');"
                           style="display:inline;">
@@ -118,6 +194,3 @@
         </div>
     </div>
 </div>
-
-
-
